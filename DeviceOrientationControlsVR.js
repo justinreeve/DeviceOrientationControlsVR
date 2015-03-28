@@ -1,5 +1,5 @@
 /**
- * DeviceOrientationControls - applies device orientation on object rotation
+ * DeviceOrientationControlsVR - applies device orientation on object rotation
  *
  * @param {Object} object - instance of THREE.Object3D
  * @constructor
@@ -9,6 +9,7 @@
  * @author jonobr1 / http://jonobr1.com
  * @author arodic / http://aleksandarrodic.com
  * @author doug / http://github.com/doug
+ * @author justinreeve / http://github.com/justinreeve
  *
  * W3C Device Orientation control
  * (http://w3c.github.io/deviceorientation/spec-source-orientation.html)
@@ -83,6 +84,10 @@ THREE.DeviceOrientationControls = function(object) {
 
   }).bind(this);
 
+	this.compass = function(delta)
+	{
+	};
+
   this.update = function(delta) {
 
     return function() {
@@ -95,6 +100,13 @@ THREE.DeviceOrientationControls = function(object) {
         this.screenOrientation = orientation;
         this.autoAlign = true;
       }
+
+      this.alphaOrig = this.deviceOrientation.alpha ?
+        this.deviceOrientation.alpha : 0;
+      this.betaOrig = this.deviceOrientation.beta ?
+        this.deviceOrientation.beta : 0;
+      this.gammaOrig = this.deviceOrientation.gamma ?
+        this.deviceOrientation.alpha : 0;
 
       this.alpha = this.deviceOrientation.gamma ?
         THREE.Math.degToRad(this.deviceOrientation.alpha) : 0; // Z
@@ -120,6 +132,9 @@ THREE.DeviceOrientationControls = function(object) {
 
       // camera looks out the back of the device, not the top
       this.orientationQuaternion.multiply(q1);
+
+//	  var q2 = new THREE.Quaternion(- Math.sqrt(0.5), 0, 0, Math.sqrt(0.5));
+//	  this.orientationQuaternion.multiply(q2);
 
       // adjust for screen orientation
       this.orientationQuaternion.multiply(q0.setFromAxisAngle(zee, - this.orient));
