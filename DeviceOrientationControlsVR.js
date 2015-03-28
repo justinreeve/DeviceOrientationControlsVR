@@ -14,7 +14,6 @@
  * (http://w3c.github.io/deviceorientation/spec-source-orientation.html)
  */
 
-
 THREE.DeviceOrientationControls = function(object) {
 
   this.object = object;
@@ -195,6 +194,4 @@ THREE.DeviceOrientationControls = function(object) {
     window.removeEventListener('deviceorientation', this.onDeviceOrientationChangeEvent, false);
 
   };
-
-
 };
